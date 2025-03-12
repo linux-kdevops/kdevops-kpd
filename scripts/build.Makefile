@@ -8,6 +8,8 @@ clean: $(clean-subdirs)
 
 PHONY += mrproper
 mrproper:
+	@$(Q)rm -rf $(CURDIR)/workflows/linux/refs/default/
+	@$(Q)rm -rf $(CURDIR)/workflows/linux/refs/user/
 	@$(Q)rm -rf $(CURDIR)/include/config/
 	@$(Q)rm -rf $(CURDIR)/include/generated/
 	@$(Q)rm -f .config
