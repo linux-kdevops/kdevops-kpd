@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: copyleft-next-0.3.1
 
-REF_DEF_OBJS := $(addprefix $(TOPDIR)/workflows/linux/refs/default/, Kconfig.linus Kconfig.next Kconfig.stable)
-REF_DEF_SRC  := $(addprefix $(TOPDIR)/workflows/linux/refs/static/,  linus.yaml next.yaml stable.yaml)
+REF_DEF_OBJS := $(addprefix $(TOPDIR)/workflows/linux/refs/default/, Kconfig.linus Kconfig.next Kconfig.stable Kconfig.stable_rc)
+REF_DEF_SRC  := $(addprefix $(TOPDIR)/workflows/linux/refs/static/,  linus.yaml next.yaml stable.yaml stable_rc.yaml)
 
 KRELEASES_FORCE := $(if $(filter --force,$(KRELEASES_FORCE)),--force,)
 
