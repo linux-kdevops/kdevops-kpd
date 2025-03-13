@@ -3,6 +3,7 @@
 SRC_URI_HTTPS_LINUS = https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 SRC_URI_HTTPS_NEXT = https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
 SRC_URI_HTTPS_STABLE = https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+SRC_URI_HTTPS_STABLE_RC = https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
 
 SRC_URI_HTTPS_MCGROF_LINUS = https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git
 SRC_URI_HTTPS_MCGROF_NEXT = https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux-next.git
@@ -18,6 +19,7 @@ SRC_URI_HTTPS_STABLE_RC = https://git.kernel.org/pub/scm/linux/kernel/git/stable
 REFS_TARGET_LINUS := gen_refs_linus
 REFS_TARGET_NEXT := gen_refs_next
 REFS_TARGET_STABLE := gen_refs_stable
+REFS_TARGET_STABLE_RC := gen_refs_stable_rc
 
 REFS_TARGET_DEVELOPMENT := gen_refs_mcgrof_linus
 REFS_TARGET_DEVELOPMENT += gen_refs_mcgrof_next
