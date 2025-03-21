@@ -126,6 +126,11 @@ config BOOTLINUX_STABLE
 	help
 	  This will let you choose from stable Linux trees only.
 
+config BOOTLINUX_STABLE_RC
+	bool "Stable Linux release candidates"
+	help
+	  This will let you choose from stable Linux release candidates only.
+
 config BOOTLINUX_DEV
 	bool "Development Linux releases"
 	help
@@ -141,6 +146,7 @@ endchoice
 
 source "workflows/linux/Kconfig.linus"
 source "workflows/linux/Kconfig.stable"
+source "workflows/linux/Kconfig.stable_rc"
 source "workflows/linux/Kconfig.dev"
 source "workflows/linux/Kconfig.modules"
 source "workflows/linux/Kconfig.next"
