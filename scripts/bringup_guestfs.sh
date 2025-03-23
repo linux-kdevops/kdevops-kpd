@@ -14,7 +14,7 @@ IMG_FMT="qcow2"
 if [ "${CONFIG_LIBVIRT_EXTRA_DRIVE_FORMAT_RAW}" = "y" ]; then
 	IMG_FMT="raw"
 fi
-STORAGETOPDIR="${CONFIG_KDEVOPS_STORAGE_POOL_PATH}"
+STORAGETOPDIR="${CONFIG_LIBVIRT_STORAGE_POOL_PATH}"
 STORAGEDIR="${STORAGETOPDIR}/kdevops/guestfs"
 QEMU_GROUP=$CONFIG_LIBVIRT_QEMU_GROUP
 GUESTFSDIR="${TOPDIR}/guestfs"
@@ -223,6 +223,7 @@ firstboot-command systemctl stop ssh
 firstboot-command DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure -p low --force openssh-server
 firstboot-command systemctl start ssh
 firstboot-command apt update && apt upgrade --yes
+uninstall unattended-upgrades
 _EOT
 	# CONFIG_GUESTFS_COPY_SOURCES_FROM_HOST_TO_GUEST will not work
 	# if /etc/nsswitch.conf has a line like this:
@@ -269,9 +270,6 @@ USE_SUDO=""
 if [[ "$CONFIG_LIBVIRT_URI_SYSTEM" == "y" ]]; then
 	USE_SUDO="sudo "
 fi
-
-$USE_SUDO mkdir -p $STORAGEDIR
-$USE_SUDO mkdir -p $BASE_IMAGE_DIR
 
 cmdfile=$(mktemp)
 

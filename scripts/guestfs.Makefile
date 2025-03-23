@@ -18,11 +18,6 @@ QEMU_GROUP:=$(subst ",,$(CONFIG_LIBVIRT_QEMU_GROUP))
 GUESTFS_ARGS += kdevops_storage_pool_group='$(QEMU_GROUP)'
 GUESTFS_ARGS += storage_pool_group='$(QEMU_GROUP)'
 
-STORAGE_POOL_PATH:=$(subst ",,$(CONFIG_KDEVOPS_STORAGE_POOL_PATH))
-KDEVOPS_STORAGE_POOL_PATH:=$(STORAGE_POOL_PATH)/kdevops
-GUESTFS_ARGS += storage_pool_path=$(STORAGE_POOL_PATH)
-GUESTFS_ARGS += kdevops_storage_pool_path=$(KDEVOPS_STORAGE_POOL_PATH)
-
 9P_HOST_CLONE :=
 ifeq (y,$(CONFIG_BOOTLINUX_9P))
 9P_HOST_CLONE := 9p_linux_clone
@@ -88,7 +83,7 @@ bringup_guestfs: $(GUESTFS_BRINGUP_DEPS)
 		playbooks/bringup_guestfs.yml \
 		-e 'ansible_python_interpreter=/usr/bin/python3' \
 		--extra-vars=@./extra_vars.yaml \
-		--tags config-check,network
+		--tags config-check,network,storage-pool-path
 	$(Q)$(TOPDIR)/scripts/bringup_guestfs.sh
 	$(Q)ansible-playbook $(ANSIBLE_VERBOSE) --connection=local \
 		--inventory localhost, \
@@ -109,4 +104,4 @@ destroy_guestfs:
 PHONY += destroy_guestfs
 
 cleancache:
-	$(Q)rm -f $(subst ",,$(CONFIG_KDEVOPS_STORAGE_POOL_PATH))/kdevops/guestfs/base_images/*
+	$(Q)rm -f $(subst ",,$(CONFIG_LIBVIRT_STORAGE_POOL_PATH))/kdevops/guestfs/base_images/*
