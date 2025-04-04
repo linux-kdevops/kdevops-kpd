@@ -108,6 +108,15 @@ config ANSIBLE_CFG_DEPRECATION_WARNINGS
 	  Toggle to control the showing of deprecation warnings
 	  https://docs.ansible.com/ansible/latest/reference_appendices/config.html#deprecation-warnings
 
+config ANSIBLE_CFG_FORKS
+	int "forks"
+	otuput yaml
+	default 10
+	help
+	  Set the default maximum number of concurrent Ansible
+	  operations (forks).
+	  https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_strategies.html#setting-the-number-of-forks
+
 if DISTRO_OPENSUSE
 
 config ANSIBLE_CFG_RECONNECTION_RETRIES
