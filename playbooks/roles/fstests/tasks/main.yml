@@ -1377,6 +1377,17 @@
     patterns: "*.out.bad"
   register: failed_tests
 
+- name: Look for all other test attribute files
+  tags: [ 'oscheck', 'fstests', 'copy_results', 'test_artifacts' ]
+  become: yes
+  become_flags: 'su - -c'
+  become_method: sudo
+  find:
+    paths: "{{ fstests_data_target }}"
+    recurse: yes
+    patterns: "*.fsx{good,bad,log}"
+  register: test_artifacts
+
 - name: Look for TFB results files
   tags: [ 'copy_results', 'failed_tests', 'tfb' ]
   become: yes
@@ -1471,6 +1482,21 @@
   when:
     - not fstests_tfp_copy_enable_list|bool
     - failed_tests.matched > 0
+
+- name: Copy over all other test attribute files for test results
+  tags: [ 'oscheck', 'fstests', 'copy_results', 'copy_final', 'test_artifacts', 'tfb' ]
+  vars:
+    item_path_without_host: "{{ item.path | regex_replace('results') | regex_replace(ansible_host) }}"
+  fetch:
+    src: "{{ item.path }}"
+    dest: "{{ fstests_results_target }}/{{ item_path_without_host | regex_replace(fstests_data_target | regex_escape()) | regex_replace('^/', '') }}"
+    flat: yes
+    validate_checksum: False
+  with_items: "{{ test_artifacts.files }}"
+  loop_control:
+    label: "{{ item.path | regex_replace(fstests_data_target | regex_escape()) | regex_replace('^/', '') }}"
+  when:
+    - test_artifacts.matched > 0
 
 - name: Check if respective bad full file exists
   tags: [ 'oscheck', 'fstests', 'copy_results', 'failed_tests' ]
