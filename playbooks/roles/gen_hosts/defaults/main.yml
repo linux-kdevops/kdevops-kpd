@@ -29,6 +29,8 @@ kdevops_workflow_enable_ltp: False
 kdevops_workflow_enable_nfstest: false
 kdevops_workflow_enable_sysbench: false
 
+bootlinux_builder: false
+
 is_fstests: False
 fstests_fstyp: "bogus"
 fs_config_role_path: "/dev/null"
