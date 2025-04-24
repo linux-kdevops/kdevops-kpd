@@ -164,11 +164,6 @@ config LIBVIRT_STORAGE_POOL_PATH
 	default LIBVIRT_STORAGE_POOL_PATH_CUSTOM if LIBVIRT && LIBVIRT_STORAGE_POOL_PATH_CUSTOM_MANUAL
 	default VIRTUALBOX_STORAGE_POOL_PATH_CUSTOM if VAGRANT_VIRTUALBOX
 
-config KDEVOPS_STORAGE_POOL_PATH
-	string
-	output yaml
-	default "{{ libvirt_storage_pool_path }}/kdevops"
-
 config QEMU_BIN_PATH
 	string
 	default QEMU_BIN_PATH_LIBVIRT if LIBVIRT
@@ -1103,6 +1098,53 @@ config LIBVIRT_STORAGE_POOL_NAME
 	  which would make it obvious what it is for other users on the system.
 	  For instance you may want to use a volume name of "data2" for a path
 	  on a partition on /data2/ or something like that.
+
+choice
+	prompt "Storage pool user name to use"
+	default KDEVOPS_STORAGE_POOL_USER_DEFAULT
+	help
+	  The storage pool user is name of the local user ID that has
+	  access to the libvirt storage pool to be used by kdevops.
+
+	  When there is only one user running kdevops on a system,
+	  the default setting should work. To enable multiple users
+	  to run kdevops on the same system, select
+	  KDEVOPS_STORAGE_POOL_USER_AUTO.
+
+config KDEVOPS_STORAGE_POOL_USER_DEFAULT
+	bool "default"
+	help
+	  The default storage pool user name is always "kdevops".
+
+config KDEVOPS_STORAGE_POOL_USER_AUTO
+	bool "auto"
+	help
+	  Kdevops selects the storage pool user name.
+
+config KDEVOPS_STORAGE_POOL_USER_CUSTOM
+	bool "custom"
+	help
+	  Set a fixed custom storage pool user name.
+
+endchoice
+
+config KDEVOPS_STORAGE_POOL_USER_CUSTOM_NAME
+	string "Storage pool user name"
+	depends on KDEVOPS_STORAGE_POOL_USER_CUSTOM
+	help
+	  Set the name of the storage pool user.
+
+config KDEVOPS_STORAGE_POOL_USER
+	string
+	output yaml
+	default "kdevops" if KDEVOPS_STORAGE_POOL_USER_DEFAULT
+	default $(shell, echo $USER) if KDEVOPS_STORAGE_POOL_USER_AUTO
+	default KDEVOPS_STORAGE_POOL_USER_CUSTOM_NAME if KDEVOPS_STORAGE_POOL_USER_CUSTOM
+
+config KDEVOPS_STORAGE_POOL_PATH
+	string
+	output yaml
+	default "{{ libvirt_storage_pool_path }}/{{ kdevops_storage_pool_user }}"
 
 source "kconfigs/Kconfig.libvirt.zns"
 source "kconfigs/Kconfig.libvirt.largeio"
