@@ -52,3 +52,9 @@ kdevops_workflow_enable_cxl: False
 
 bootlinux_cxl_test: False
 bootlinux_tree_set_by_cli: False
+bootlinux_bisect_enable: False
+bootlinux_bisect_enable_cli: False
+bootlinux_bisect_ref_good_cli: False
+bootlinux_bisect_ref_bad_cli: False
+bootlinux_bisect_script_boot: False
+bootlinux_bisect_script_custom: False
