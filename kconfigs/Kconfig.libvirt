@@ -164,11 +164,6 @@ config LIBVIRT_STORAGE_POOL_PATH
 	default LIBVIRT_STORAGE_POOL_PATH_CUSTOM if LIBVIRT && LIBVIRT_STORAGE_POOL_PATH_CUSTOM_MANUAL
 	default VIRTUALBOX_STORAGE_POOL_PATH_CUSTOM if VAGRANT_VIRTUALBOX
 
-config KDEVOPS_STORAGE_POOL_PATH
-	string
-	output yaml
-	default "{{ libvirt_storage_pool_path }}/kdevops"
-
 config QEMU_BIN_PATH
 	string
 	default QEMU_BIN_PATH_LIBVIRT if LIBVIRT
@@ -1103,6 +1098,16 @@ config LIBVIRT_STORAGE_POOL_NAME
 	  which would make it obvious what it is for other users on the system.
 	  For instance you may want to use a volume name of "data2" for a path
 	  on a partition on /data2/ or something like that.
+
+config KDEVOPS_STORAGE_POOL_USER
+	string
+	output yaml
+	default "kdevops"
+
+config KDEVOPS_STORAGE_POOL_PATH
+	string
+	output yaml
+	default "{{ libvirt_storage_pool_path }}/{{ kdevops_storage_pool_user }}"
 
 source "kconfigs/Kconfig.libvirt.zns"
 source "kconfigs/Kconfig.libvirt.largeio"
